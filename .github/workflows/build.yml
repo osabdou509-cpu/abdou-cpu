@@ -21,6 +21,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    # الخطوة الجديدة: إنشاء أو تحميل ملف gradlew
+    - name: Generate Gradle Wrapper
+      run: gradle wrapper
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
