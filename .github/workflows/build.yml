@@ -21,9 +21,18 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    # الخطوة الجديدة: إنشاء أو تحميل ملف gradlew
     - name: Generate Gradle Wrapper
       run: gradle wrapper
+
+    # الخطوة الجديدة 1: إنشاء مفتاح التوقيع تلقائياً
+    - name: Generate Debug Keystore
+      run: |
+        keytool -genkey -v -keystore debug.keystore -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Android Debug,O=Android,C=US"
+
+    # الخطوة الجديدة 2: إخبار Gradle بتجاهل ملف google-services.json
+    - name: Ignore Google Services
+      run: |
+        echo "googleServices.missing.passthrough=true" >> gradle.properties
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
